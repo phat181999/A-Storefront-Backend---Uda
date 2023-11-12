@@ -1,0 +1,10 @@
+connect postgres
+psql -U postgres
+create table via file sql 
+psql -h your_host -d your_database -U your_username -W -f createTable.sql
+
+get your_database \l
+get table_name \dt
+
+Here's a simple example to list all databases using psql:
+psql -h your_host -U your_username -l

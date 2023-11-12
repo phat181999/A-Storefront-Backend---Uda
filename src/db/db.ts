@@ -1,5 +1,6 @@
-import { Pool } from 'pg'
+import { Pool, PoolClient } from 'pg'
 import dotenv from 'dotenv'
+import { readFile } from 'fs/promises'
 dotenv.config()
 
 const pool = new Pool({
@@ -11,15 +12,25 @@ const pool = new Pool({
 })
 
 // Check the connection immediately when this module is required
-;(async () => {
+async function createTableFromFile() {
+  const client = await pool.connect()
   try {
-    const client = await pool.connect()
-    console.log('Connected to the database successfully.')
-    client.release()
-  } catch (err) {
-    console.error('Database connection failed', err)
-    process.exit(1)
-  }
-})()
+    // Read the SQL file
+    const sqlFilePath = './src/db/table.sql'
+    const sqlQuery = await readFile(sqlFilePath, 'utf8')
 
-export default pool
+    // Execute the query
+    await client.query(sqlQuery)
+    console.log('Table created successfully!')
+  } catch (error) {
+    console.error('Error creating table:', error)
+  } finally {
+    client.release() // Release the client back to the pool
+  }
+}
+
+async function getGlobalClient(): Promise<PoolClient> {
+  const client = await pool.connect()
+  return client
+}
+export { createTableFromFile, pool, getGlobalClient }
