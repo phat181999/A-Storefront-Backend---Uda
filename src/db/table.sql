@@ -16,7 +16,7 @@ DROP TABLE IF EXISTS categorys;
 -- Recreate the tables
 CREATE TABLE
   IF NOT EXISTS categorys (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     categoryName VARCHAR(50) NOT NULL
   );
 
@@ -31,7 +31,7 @@ CREATE TABLE
 
 CREATE TABLE
   IF NOT EXISTS users (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     firstName VARCHAR(255) NOT NULL,
     lastName VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL
@@ -39,7 +39,7 @@ CREATE TABLE
 
 CREATE TABLE
   IF NOT EXISTS Orders (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     user_id INT,
     status VARCHAR(20) CHECK (status IN ('active', 'complete')),
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -48,7 +48,7 @@ CREATE TABLE
 
 CREATE TABLE
   IF NOT EXISTS OrderDetails (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     order_id INT,
     product_id INT,
     quantity INT,

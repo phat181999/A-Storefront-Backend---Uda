@@ -3,7 +3,7 @@ import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import { createTableFromFile, pool } from './db/db'
-import rootRouter from './services'
+import rootRouter from './routes'
 dotenv.config()
 const port = process.env.PORT
 const app = express()

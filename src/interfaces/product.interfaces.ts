@@ -1,4 +1,4 @@
-export default interface CreateProduct {
+export default interface Product {
   name: string
   price: number
   categoryId: number
